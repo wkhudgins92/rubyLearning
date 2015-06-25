@@ -21,8 +21,12 @@ In conjunction with the find command, the LickAnalyzer would store all the
 aforementioned data in a .csv file.
 
 This program is not designed to be used in conjunction with the find command
-in order to generate a .csv file. However, given a data file, it will calculate
-the mean, mode, median, sum, and mean of the ten largest values.
+in order to generate a .csv file in the same way the
+original LickAnalyzer did because it does not parse trial information from
+the file name. However, given a data file, it will calculate
+the mean, mode, median, sum, and the ten largest values and output that information
+in .csv format.
 
-The program found in the memory directory was optimized to minimize memory usage
-and the one in the normal directory was not optimized to minimize memory usage.
+The program found in the normal directory has not been optimized to limit memory
+usage. Currently, the one in memory directory has not been either; however, I plan
+on going back and optimizing the program in memory to limit memory usage.
