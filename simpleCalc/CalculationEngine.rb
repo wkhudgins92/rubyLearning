@@ -36,6 +36,10 @@ class CalculationEngine
   end
 
   private def divide(operands)
-    return operands.reduce(1, :/)
+    operands = operands.reverse()
+    quotient = operands.pop()
+    operands = operands.reverse()
+    operands.each{ |a| quotient/=a }
+    return quotient
   end
 end
