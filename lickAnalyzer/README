@@ -30,3 +30,5 @@ in .csv format.
 The program found in the normal directory has not been optimized to limit memory
 usage. Currently, the one in memory directory has not been either; however, I plan
 on going back and optimizing the program in memory to limit memory usage.
+
+Note: assumes input file is in correct format.

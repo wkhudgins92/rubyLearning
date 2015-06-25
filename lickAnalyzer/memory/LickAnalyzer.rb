@@ -43,14 +43,25 @@ module LickTrial
   end
 end
 
+# Check input
+if (ARGV[0] == nil)
+  raise ArgumentError.new("Usage: ruby LickAnalyzer.rb filename")
+end
+
+# Read in data, remove newlines, and convert to floats
 dataset = Array.new
 
-File.foreach('rat.txt') { |x| dataset.push(x)}
+begin
+  File.foreach(ARGV[0]) { |x| dataset.push(x)}
+  rescue => error  
+    fail Errno::ENOENT, 'Could not open specified file for reading' 
+end
+
 dataset.map { |a| a.delete!("\n") }
 dataset = dataset.map { |a| a.to_f }
+
+# Calculate and output data
 dataset.extend(LickTrial)
 printf("mean,median,mode,sum,top10\n")
 printf("%.2f,%.2f,%.2f,%.2f,%s\n", dataset.mean, dataset.median,
   dataset.mode, dataset.sum, dataset.top_ten) 
-
-
