@@ -36,9 +36,14 @@ class CalculationEngine
   end
 
   private def divide(operands)
+    # Take this approach instead of reduce(1, :/) because all fractions, except 1/2, that
+    # result in a value of .5 would fail
+
+    # Remove first value of array
     operands = operands.reverse()
     quotient = operands.pop()
     operands = operands.reverse()
+
     operands.each{ |a| quotient/=a }
     return quotient
   end
