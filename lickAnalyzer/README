@@ -1,0 +1,28 @@
+This file is an abbreviated recode of the LickAnalyzer program which
+I developed in early 2013 for the Texas Lutheran University
+Behavioral Neuroscience Laboratory.
+
+The lab had a transducer which was attached to a mock sipper tube.
+Rats would lick the mock sipper tube and the transducer would
+record the force of their lick. The researchers theorized that the
+force of a rat's lick was a measure of the palatability, as perceived
+by the rat, of substances administered via the mock sipper tube.
+
+Each experimental trial generated a file with approximately
+2400 data points. 17 rats were used in the experiment.
+Each rat underwent 20 trials yielding about
+816000 data points spread across 340 files.
+
+The original LickAnalyzer was implemented in Java and in conjunction with
+the find command would analyze all data files. The LickAnalyzer would
+calculate the mean, mode, median, and sum of each trial. In
+addition, the LickAnalyzer would calculate the top ten highest force values.
+In conjunction with the find command, the LickAnalyzer would store all the
+aforementioned data in a .csv file.
+
+This program is not designed to be used in conjunction with the find command
+in order to generate a .csv file. However, given a data file, it will calculate
+the mean, mode, median, sum, and mean of the ten largest values.
+
+The program found in the memory directory was optimized to minimize memory usage
+and the one in the normal directory was not optimized to minimize memory usage.
