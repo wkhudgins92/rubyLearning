@@ -18,6 +18,57 @@ class LinearSystem < Array
 
   # Public method for approximating the system iteratively via Jacobi Iteration
   def jacobi
+    # These variables are helpful throughout method
+    last_row_index = self.length - 1  
+    last_col_index = last_row_index + 1 # One more column than row
+    
+    tolerance = 0.00001 # Tolerance within which two values are considered ==
+    estimate = Array.new(last_col_index, 0) # Initialize estimate vec to 0
+    old_estimate = Array.new(last_col_index, 1) # Initialize old_est to 1
+    equations = generate_jacobi_equations(self)
+
+    until (estimate.reduce(:+) - old_estimate.reduce(:+)).abs <= tolerance
+      equations.each_index do |i|
+        sum = 0
+        estimate.each_index do |j|
+          if j != last_col_index
+            sum += equations[i][j] * estimate[i]
+          else
+            sum += equations[i][j]
+          end
+        end
+        estimate[i] = sum
+      end
+puts "rat"
+puts estimate.inspect
+    end
+    puts estimate.inspect
+  end
+
+  # Private helper method for Jacobi
+  # Generates the equations used in Jacobi iteration
+  private def generate_jacobi_equations(matrix)
+    # These variables are helpful throughout method
+    last_row_index = matrix.length - 1  
+    last_col_index = last_row_index + 1 # One more column than row
+
+    equation = Array.new
+    for i in 0..last_row_index
+      sum = 0
+      diagonal = matrix[i][i]
+      equation[i] = Array.new
+      for j in 0..last_col_index
+        if j == last_col_index
+          equation[i][j] = matrix[i][j] / diagonal.to_f #.to_f avoid int div 
+        elsif j != i 
+          equation[i][j] = -1.0 * matrix[i][j] / diagonal + 0 # +0 to avoid -0s
+        elsif j == i # Could use an else here, but elsif is more readable
+          equation[i][j] = 0
+        end 
+      end
+    end
+
+    return equation
   end
 
   # Private helper method for Gaussian elimination, performs forward elimination
@@ -104,10 +155,15 @@ class LinearSystem < Array
     return column_to_eliminate.find_index(column_to_eliminate.max)	
   end
 end
-
+=begin
 rat = LinearSystem[[3, -13, 9, 3, -19],
              [-6, 4, 1, -18, -34],
              [6, -2, 2, 4, 16],
              [12, -8, 6, 10, 26]]
 puts rat.inspect
 puts rat.gaussian
+=end
+torito = LinearSystem[[2, -1, 0, 1],
+                      [-1, 3, -1, 8],
+                      [0, -1, 2, -5]]
+torito.jacobi
