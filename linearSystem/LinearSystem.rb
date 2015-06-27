@@ -15,7 +15,6 @@ class LinearSystem < Array
   # Public method for solving the system analytically using Gaussian elimination
   def gaussian
     reduced_matrix = forward_elimination(self)
-#puts reduced_matrix.inspect
     #return back_substitution(reduced_matrix) 
   end
 
@@ -28,8 +27,6 @@ class LinearSystem < Array
   # Returns a reduced version of the matrix
   private def forward_elimination(matrix)
     return matrix if matrix.length == 1
-puts "Start"
-puts matrix.inspect
 
     pivot_index = find_pivot(matrix)
     temp_row = matrix[pivot_index]
@@ -47,25 +44,27 @@ puts matrix.inspect
         matrix[i][j] -= multiplied_pivot_rows[i][j]
       end
     end
-puts "rat"
-puts matrix.inspect
-    sub_matrix = matrix[1..matrix.length].map { |row| row = row.drop(1) }
-    sub_matrix = forward_elimination sub_matrix
-    puts sub_matrix.inspect
-puts matrix.length - 1
+
+    if matrix.length > 2
+      sub_matrix = matrix[1..matrix.length].map { |row| row = row.drop(1) }
+      sub_matrix = forward_elimination sub_matrix
+    else
+      return matrix
+    end
+
     for i in 1..(matrix.length - 1)
       for j in 1..(matrix.length) # Not -1 because there is one more column than rows
-        matrix[i][j] = sub_matrix[i][j]
+        matrix[i][j] = sub_matrix[i - 1][j - 1] # Submatrix -1 because it is smaller
       end
     end
-#puts "End"
-#puts matrix.inspect
+
     return matrix
   end
 
   # Private helper method for Gaussian elimination, performs back substitution
   # Returns the solution vector for the system of linear equations
-  private def back_substituion
+  private def back_substituion(matrix)
+    matrix = matrix.reverse
   end
 
   # Private helper method to find the pivot for an iteration of elimination
@@ -75,8 +74,8 @@ puts matrix.length - 1
   end
 end
 
-rat = LinearSystem[[6, -2, 2, 4, 16],
-             [12, -8, 6, 10, 26],
-             [3, -13, 9, 3, -19],
-             [-6, 4, 1, -18, -34]]
+rat = LinearSystem[[3, -13, 9, 3, -19],
+             [-6, 4, 1, -18, -34],
+             [6, -2, 2, 4, 16],
+             [12, -8, 6, 10, 26]]
 rat.gaussian
